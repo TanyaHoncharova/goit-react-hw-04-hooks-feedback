@@ -1,4 +1,5 @@
-import React, { Component } from "react";
+import React from "react";
+import { useState } from "react";
 import PropTypes from "prop-types";
 
 import FeedbackOptions from "./components/FeedbackOptions";
@@ -7,89 +8,77 @@ import Section from "./components/Section";
 import Notification from "./components/Notification";
 import "./App.css";
 
-class App extends Component {
-  static defaultProps = {
-    totalFeedback: 0,
-    percentageOfGoodFeedb: 0,
-  };
+const App = (totalFeedback) => {
+  const [good, setGood] = useState(0);
+  const [neutral, setNeutral] = useState(0);
+  const [bad, setBad] = useState(0);
 
-  state = {
-    good: 0,
-    neutral: 0,
-    bad: 0,
-  };
-
-  countTotalFeedback = () => {
-    const totalFeedback = this.state.good + this.state.neutral + this.state.bad;
+  const countTotalFeedback = () => {
+    const totalFeedback = good + neutral + bad;
     return totalFeedback;
   };
 
-  countPositiveFeedbackPercentage = () => {
-    const { good, neutral, bad } = this.state;
+  const countPositiveFeedbackPercentage = () => {
     const percentageOfGoodFeedb = Math.ceil(
       (good / (good + neutral + bad)) * 100
     );
     return percentageOfGoodFeedb || 0;
   };
 
-  handleGoodBtn = () => {
-    this.setState((prevState) => {
-      return {
-        good: prevState.good + 1,
-      };
-    });
-    this.countTotalFeedback();
-    this.countPositiveFeedbackPercentage();
+  const handleGoodBtn = () => {
+    setGood((prev) => prev + 1);
+    countTotalFeedback();
+    countPositiveFeedbackPercentage();
   };
 
-  handleNeutralBtn = () => {
-    this.setState((prevState) => {
-      return {
-        neutral: prevState.neutral + 1,
-      };
-    });
-    this.countTotalFeedback();
+  const handleNeutralBtn = () => {
+    setNeutral((prev) => prev + 1);
+    countTotalFeedback();
   };
 
-  handleBadBtn = () => {
-    this.setState((prevState) => {
-      return {
-        bad: prevState.bad + 1,
-      };
-    });
-    this.countTotalFeedback();
+  const handleBadBtn = () => {
+    setBad((prev) => prev + 1);
+    countTotalFeedback();
   };
 
-  render(totalFeedback) {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <h1>Please leave feedback</h1>
-        </header>
+  // render (totalFeedback) {
+  return (
+    <div className="App">
+      <header className="App-header">
+        <h1>Please leave feedback</h1>
+      </header>
 
-        <Section title="">
-          <FeedbackOptions
-            onHandleGoodBtn={this.handleGoodBtn}
-            onHandleNeutralBtn={this.handleNeutralBtn}
-            onHandleBadBtn={this.handleBadBtn}
+      <Section title="">
+        <FeedbackOptions
+          onHandleGoodBtn={handleGoodBtn}
+          onHandleNeutralBtn={handleNeutralBtn}
+          onHandleBadBtn={handleBadBtn}
+        />
+      </Section>
+      {totalFeedback !== 0 ? (
+        <Section title="Statistics">
+          <Statistics
+            Good={good}
+            Neutral={neutral}
+            Bad={bad}
+            Total={countTotalFeedback()}
+            Positive={countPositiveFeedbackPercentage}
           />
         </Section>
-        {totalFeedback !== 0 ? (
-          <Section title="Statistics">
-            <Statistics
-              Good={this.state.good}
-              Neutral={this.state.neutral}
-              Bad={this.state.bad}
-              Total={this.countTotalFeedback()}
-              Positive={this.countPositiveFeedbackPercentage}
-            />
-          </Section>
-        ) : (
-          <Notification message="No feedback yet" />
-        )}
-      </div>
-    );
-  }
-}
+      ) : (
+        <Notification message="No feedback yet" />
+      )}
+    </div>
+  );
+};
+
+App.defaultProps = {
+  totalFeedback: 0,
+  percentageOfGoodFeedb: 0,
+};
+App.propTypes = {
+  totalFeedback: PropTypes.number,
+  percentageOfGoodFeedb: PropTypes.number,
+};
 
 export default App;
