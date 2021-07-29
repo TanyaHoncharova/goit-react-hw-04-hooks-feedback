@@ -1,0 +1,83 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.StatCounter {
+  width: 350px;
+  /* outline: 1px solid tomato; */
+  margin-left: 30px;
+}
+
+.title {
+  display: flex;
+  justify-content: center;
+  font-size: 20px;
+  font-weight: bold;
+  color: #282c34;
+  margin-left: auto;
+  margin-right: auto;
+}
+.BtnContainer {
+  display: flex;
+  justify-content: center;
+}
+
+.statBtn {
+  margin: 10px;
+  padding: 5px;
+  border-radius: 5px;
+  background-color: rgba(71, 109, 192, 0.363);
+}
+.statBtn :hover,
+:focus {
+  background-color: rgba(21, 69, 226, 0.192);
+}
+
+.statistic {
+  list-style: none;
+  font-size: 16px;
+  font-weight: bold;
+  color: #282c34;
+}
+
+.Notification {
+  display: flex;
+  align-self: center;
+  margin: 30px;
+  padding: 30px;
+  color: red;
+  border: 2px solid tomato;
+}
